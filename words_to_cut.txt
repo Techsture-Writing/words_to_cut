@@ -1,35 +1,35 @@
-\ \ Because
-\ all\ 
-\ ever\ 
-\ is\ 
-\ some\ 
-\ very\ 
-\.\ \ And
-\.\ \ For
-\.\ \ It
-\.\ \ So
-a\ bit
-A\ bit
+  Because
+ all 
+ ever 
+ is 
+ some 
+ very 
+.  And
+.  For
+.  It
+.  So
+a bit
+A bit
 actually
 Actually
-all\ of
-All\ of
-all\ right
-All\ right
+all of
+All of
+all right
+All right
 alright
 Alright
 also
 Also
-and\ so
-And\ so
-any\ more
-Any\ more
+and so
+And so
+any more
+Any more
 anymore
 Anymore
 anything
 Anything
 at all
-At\ all
+At all
 big
 Big
 certainly
@@ -44,22 +44,22 @@ especially
 Especially
 even
 Even
-exact\ same
-Exact\ same
+exact same
+Exact same
 feel
 Feel
 felt
 Felt
 finally
 Finally
-he\ knew
-He\ knew
+he knew
+He knew
 hear
 Hear
 heard
 Heard
-I\ know
-it\.
+I know
+it.
 just
 Just
 knew
@@ -74,18 +74,18 @@ look
 Look
 looked
 Looked
-must\ have
-Must\ have
+must have
+Must have
 nothing
 Nothing
-of\ course
-Of\ course
+of course
+Of course
 only
 Only
-or\ not
-Or\ not
-or\ so
-Or\ so
+or not
+Or not
+or so
+Or so
 realize
 Realize
 realized
@@ -116,14 +116,14 @@ sometimes
 Sometimes
 somewhat
 Somewhat
-sort\ of
-Sort\ of
+sort of
+Sort of
 started
 Started
 still
 Still
-such\ a
-Such\ a
+such a
+Such a
 sudden
 Sudden
 suddenly
@@ -158,5 +158,5 @@ wondered
 Wondered
 world
 World
-you\ know
-You\ know
+you know
+You know
