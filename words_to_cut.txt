@@ -58,10 +58,18 @@ hear
 Hear
 heard
 Heard
+highly
+Highly
+generally
+Generally
 I know
+in a sense
+In a sense
 it.
 just
 Just
+kind of
+Kind of
 knew
 Knew
 know
@@ -78,6 +86,8 @@ must have
 Must have
 nothing
 Nothing
+noticed
+Noticed
 of course
 Of course
 only
@@ -86,6 +96,10 @@ or not
 Or not
 or so
 Or so
+precisely
+Precisely
+probably
+Probably
 realize
 Realize
 realized
@@ -150,14 +164,20 @@ touch
 Touch
 touched
 Touched
+totally
+Totally
 tried
 Tried
 tries
 Tries
+truly
+Truly
 usually
 Usually
 was
 Was
+watched
+Watched
 wonder
 Wonder
 wondered
