@@ -1,60 +1,47 @@
-#!/usr/bin/env python3
-
+#! /usr/bin python3
 
 # Requirements:
 # pip3 install pymupdf reportlab
 
-import fitz
+import fitz  # PyMuPDF
+import re
 import argparse
-import os
 
-
-WORD_LIST = "words_to_cut.txt"
-
-# Define highlight colors in RGB format (0-1 range)
-PALE_HIGHLIGHT_COLORS = [
-    (1, 1, 0.6),    # Pale Yellow
-    (1, 0.85, 0.6), # Pale Orange
-    (1, 0.6, 0.6),  # Pale Red
-    (0.6, 0.8, 1),  # Pale Blue
-    (0.6, 1, 0.6)   # Pale Green
-]
-
-
-def read_words_from_file(file_path):
-    #Reads a list of words from a text file, removing only newline characters.
+def load_words(file_path):
     with open(file_path, 'r') as file:
-        words = [line.strip('\n') for line in file]
-    return words
+        return [line.strip().lower() for line in file if line.strip()]
 
+def highlight_words_in_pdf(input_pdf, output_pdf, words_to_highlight):
+    doc = fitz.open(input_pdf)
+
+    for page in doc:
+        text_instances = []
+        page_text = page.get_text("text")
+        for word in words_to_highlight:
+            for match in re.finditer(r'\b' + re.escape(word) + r'\b', page_text, re.IGNORECASE):
+                start = match.start()
+                end = match.end()
+                text_instances.extend(page.search_for(page_text[start:end]))
+
+        for inst in text_instances:
+            highlight = page.add_highlight_annot(inst)
+            highlight.update()
+
+    doc.save(output_pdf, garbage=4, deflate=True)
+    doc.close()
 
 def main(input_pdf):
-    # Read words to highlight from the text file
-    words_to_highlight = read_words_from_file(WORD_LIST)    
-    # Open the PDF
-    pdf_document = fitz.open(input_pdf)
-    color_index = 0
-    # Iterate through pages
-    for page_num in range(len(pdf_document)):
-        page = pdf_document.load_page(page_num)
-        for word in words_to_highlight:
-            text_instances = page.search_for(word)
-            for inst in text_instances:
-                highlight = page.add_highlight_annot(inst)
-                highlight.set_colors({"stroke": PALE_HIGHLIGHT_COLORS[color_index]})
-                highlight.update()
-                color_index = (color_index + 1) % len(PALE_HIGHLIGHT_COLORS)
-    # Create the output file name
-    base_name = os.path.splitext(input_pdf)[0]
-    output_pdf = f"{base_name}_highlighted.pdf"
-    # Save the new PDF
-    pdf_document.save(output_pdf)
-    print(f"Output saved to {output_pdf}")
+    output_pdf = "output_highlighted.pdf"
+    words_file = "words_to_cut.txt"
 
+    words_to_highlight = set(load_words(words_file))
+
+    highlight_words_in_pdf(input_pdf, output_pdf, words_to_highlight)
+
+    print(f"Highlighted PDF has been saved to {output_pdf}")
 
 if __name__ == '__main__':
-    # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Highlight words in a PDF document.")
     parser.add_argument("input_pdf", help="Path to the input PDF file")
-    args = parser.parse_args()    
+    args = parser.parse_args()
     main(args.input_pdf)
