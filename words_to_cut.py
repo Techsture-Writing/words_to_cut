@@ -1,11 +1,16 @@
-#! /usr/bin python3
-
-# Requirements:
-# pip3 install pymupdf reportlab
+#! /usr/bin/env python3
 
 import fitz  # PyMuPDF
-import re
 import argparse
+
+# Define highlight colors in RGB format (0-1 range)
+PALE_HIGHLIGHT_COLORS = [
+    (1, 1, 0.6),    # Pale Yellow
+    (1, 0.85, 0.6), # Pale Orange
+    (1, 0.6, 0.6),  # Pale Red
+    (0.6, 0.8, 1),  # Pale Blue
+    (0.6, 1, 0.6)   # Pale Green
+]
 
 def load_words(file_path):
     with open(file_path, 'r') as file:
@@ -13,19 +18,18 @@ def load_words(file_path):
 
 def highlight_words_in_pdf(input_pdf, output_pdf, words_to_highlight):
     doc = fitz.open(input_pdf)
+    color_count = len(PALE_HIGHLIGHT_COLORS)
 
     for page in doc:
-        text_instances = []
-        page_text = page.get_text("text")
-        for word in words_to_highlight:
-            for match in re.finditer(r'\b' + re.escape(word) + r'\b', page_text, re.IGNORECASE):
-                start = match.start()
-                end = match.end()
-                text_instances.extend(page.search_for(page_text[start:end]))
-
-        for inst in text_instances:
-            highlight = page.add_highlight_annot(inst)
-            highlight.update()
+        words_on_page = page.get_text("words")
+        for word in words_on_page:
+            word_text = word[4].lower()
+            if word_text in words_to_highlight:
+                rect = fitz.Rect(word[:4])
+                color = PALE_HIGHLIGHT_COLORS[hash(word_text) % color_count]
+                highlight = page.add_highlight_annot(rect)
+                highlight.set_colors(stroke=color)
+                highlight.update()
 
     doc.save(output_pdf, garbage=4, deflate=True)
     doc.close()
